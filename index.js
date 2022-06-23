@@ -9,7 +9,8 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/video', function (req, res) {
+app.get('/video/:path', function (req, res) {
+    const { path: videopath } = req.params;
     const range = req.headers.range;
     if (!range) {
         res.status(400).send('Requires Range header');
@@ -48,8 +49,8 @@ app.get('/next', function (req, res) {
         default:
             break;
     }
-    console.log(`videopath: `, videopath);
-    res.sendStatus(200);
+
+    res.status(200).send({ path: videopath });
 });
 
 app.listen(8000, function () {
